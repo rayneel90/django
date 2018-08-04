@@ -20,6 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls', namespace='homepage')),
     path('calculator/', include('calculator.urls', namespace='calculator')),
-    path('log/', include('log.urls', namespace='calculator')),
-
+    path('log/', include('log.urls', namespace='log')),
+    path('backend/', include('backend.urls', namespace='backend')),
 ]

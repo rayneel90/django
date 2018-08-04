@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.views.generic import TemplateView
 
-def Home(request):
-    return HttpResponse('this is calculator')
+class CalculatorView(TemplateView):
+    template_name = "calculator.html"
