@@ -105,8 +105,8 @@ class Calculator:
     roe_objective = .14
 
     def __init__(self, typ: str, product: str, sanction_amt: int, roi: float,
-                 profee: float, conpay: float, other: int, recurr: int,
-                 insur: int, psl: int, agri_psl: int, ltv: float = None,
+                 profee: float, conpay: float, other: int, insur: int,
+                 recurr: int=0, psl: int=0, agri_psl: int=0, ltv: float=None,
                  rating: str = None, tenure: int = 60, utilisation: float = 0.7):
         """
 
@@ -132,6 +132,7 @@ class Calculator:
         self.__ltv = ltv
         self.__sanction_amt = sanction_amt
         self.__roi = roi
+        self.__tenure = tenure
         if typ == 'ODCC':
             self.__tenure = 60
         self.__yrs = int(np.ceil(tenure / 12))
@@ -252,7 +253,7 @@ class Calculator:
                          np.repeat(0, self.pos.shape[0] - 1))
 
     def compute_other_income(self):
-        other = np.repeat(self.other_fee, self.pos.shape[0] - 1) if \
+        other = np.repeat(self.other_income, self.pos.shape[0] - 1) if \
             self.is_other_recurring else np.repeat(0, self.pos.shape[0] - 1)
         other = np.append(
             self.other_income + self.insurance * self.insurance_income_perc, other

@@ -3,15 +3,13 @@
 {% load staticfiles %}
 
 
-{% block stylesheets %}
-  <link rel="stylesheet" href="{% static 'css/calculator.css' %}" >
-  <script src="{% static 'js/calculator.js' %}"></script>
-{% endblock %}
+{% block stylesheets %} <link rel="stylesheet" href="{% static 'css/calculator.css' %}" > {% endblock %}
 
 {% block content %}
 <main role="main">
-  <div class="my-5 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-10 offset-sm-1">
-    <div class="card">
+  <div class="row p-4">
+    <div class="col-lg-4 col-md-6  col-sm-10 ">
+    <div class=" card ">
       <h5 class="card-header"> Enter Loan Details</h5>
       <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
@@ -28,97 +26,104 @@
               {% csrf_token %}
               <input hidden value="TL" name="typ">
                 <div class="card mx-3 my-1 border-0">
-                  <div class="card-header p-0" id="TLBasicHeader">
+                  <div class="card-header p-0" id="basic">
                     <h5 class="m-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#TLBasicBody"
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseZero"
                               aria-expanded="true" aria-controls="collapseOne" type="button">
                         Basic Loan Details
                       </button>
                     </h5>
                   </div>
-                  <div id="TLBasicBody" class="collapse show" aria-labelledby="headingOne">
+                  <div id="collapseZero" class="collapse show" aria-labelledby="headingOne">
                     <div class="card-body">
                       <div class="form-group">
                         <label class="font-weight-bold" for="Appl">Application Number</label>
-                        <input id="TLApplNo" type="text" required class="form-control" name="ApplNo">
+                        <input id="Appl" type="text" required class="form-control" name="ApplNo">
                       </div>
                       <div class="row">
                         <div class="col-sm-8">
                           <div class="form-group">
                             <label class="font-weight-bold" for="RMname">RM's Name</label>
-                            <input id="TLRMname" type="text" required class="form-control" name="RMName">
+                            <input id="RMname" type="text" required class="form-control" name="RMName">
                           </div>
                         </div>
                         <div class="col-sm-4">
                           <div class="form-group">
                             <label class="font-weight-bold" for="HRMS">HRMS No</label>
-                            <input id="TLHRMS" type="text" required class="form-control" name="HRMS">
+                            <input id="HRMS" type="text" required class="form-control" name="HRMS">
                           </div>
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="font-weight-bold" for="Product">Product</label>
-                        <select class="custom-select" id="TLProduct" name="product" required>
+                        <select class="custom-select" id="Product" name="product" required>
                           <option hidden disabled selected value> -- select an option -- </option>
                           <option value="HL">Home Loan</option>
                           <option value="LAP">Loan Against Property</option>
                           <option value="CV">Commercial Vehicle Loan</option>
                           <option value="SME">SME Loans</option>
                           <option value="Tractor">Tractor Loan</option>
-                          <option value="Corporate">Corporate</option>
-                          <option value="AIB">Bulk AIB</option>
                         </select>
                       </div><!-- Product -->
                     </div>
                   </div>
                 </div>
                 <div class="card mx-3 my-1 border-0">
-                  <div class="card-header p-0" id="TLFinancialHeader">
+                  <div class="card-header p-0" id="basic">
                     <h5 class="m-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#TLFinancialBody"
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
                               aria-expanded="true" aria-controls="collapseOne" type="button">
                         Financial Details
                       </button>
                     </h5>
                   </div>
-                  <div id="TLFinancialBody" class="collapse" aria-labelledby="headingOne">
+                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
                     <div class="card-body">
+                      <div class="form-group">
+                        <label class="font-weight-bold" for="LTV">LTV</label>
+                        <div class="input-group mb-3">
+                          <input type="number" step="0.1" class="form-control" id = "LTV" name="ltv">
+                          <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        </div>
+                      </div><!-- LTV-->
                       <div class='row'>
-                        <div id='magicdiv1'class='col-sm-7'>
+                        <div class='col-sm-7'>
                           <div class="form-group">
-                            <label class="font-weight-bold" for="TLPrincipal">Loan Amount</label>
+                            <label class="font-weight-bold" for="Principal">Loan Amount</label>
                             <div class="input-group mb-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">&#8377</span>
                               </div>
-                              <input type="number" class="form-control" id = "TLPrincipal" name="sanction_amt" required>
+                              <input type="number" class="form-control" id = "Principal" name="sanction_amt" required>
                             </div>
                           </div><!-- Principal-->
                         </div>
-                        <div id="magicdiv2" class='col-sm-5'>
+                        <div class='col-sm-5'>
                           <div class="form-group">
-                            <label class="font-weight-bold" for="TLROI">Rate of Interest</label>
+                            <label class="font-weight-bold" for="ROI">Rate of Interest</label>
                             <div class="input-group mb-3">
-                              <input type="number" step="0.01" class="form-control" id = "TLROI" name="roi" required>
+                              <input type="number" step="0.01" class="form-control" id = "ROI" name="roi" required>
                               <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                               </div>
                             </div>
                           </div><!-- ROI-->
                         </div>
-                        <div id="magicdiv3" class="col-sm-6">
+                        <div class="col-sm-6">
                            <div class="form-group">
-                             <label class="font-weight-bold" for="TLTenure">Tenure</label>
+                             <label class="font-weight-bold" for="Tenure">Tenure</label>
                              <div class="input-group mb-3">
-                               <input type="number" class="form-control" id = "TLTenure" name="tenure" required>
+                               <input type="number" class="form-control" id = "Tenure" name="tenure" required>
                                <div class="input-group-append">
                                  <span class="input-group-text">months</span>
                                </div>
                              </div>
                            </div><!-- Tenure -->
                         </div>
-                        <div id="magicdiv4"class="col-sm-6" >
-                          <div class="form-group" id="RatingGroup">
+                        <div class="col-sm-6">
+                          <div class="form-group">
                             <label class="font-weight-bold" for="Rating">Rating</label>
                             <select class="custom-select" id="Rating" name="rating" >
                               <option hidden disabled selected value> -- select -- </option>
@@ -135,17 +140,7 @@
                               <option value="RRP">RRP</option>
                             </select>
                           </div><!-- Rating-->
-                          <div class="form-group" hidden id="LTVgroup">
-                        <label class="font-weight-bold" for="LTV">LTV</label>
-                        <div class="input-group mb-3">
-                          <input type="number" step="0.1" class="form-control" id = "LTV" name="ltv">
-                          <div class="input-group-append">
-                            <span class="input-group-text">%</span>
-                          </div>
                         </div>
-                      </div><!-- LTV-->
-                        </div>
-                      
                       </div>
                       
                     </div>
@@ -202,7 +197,7 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text">&#8377</span>
                               </div>
-                              <input type="number" class="form-control" id = "other" name="other" value=0>
+                              <input type="number" class="form-control" id = "other" name="other">
                               <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="1" name = 'recurr' id="defaultCheck1">
                                 <label class="form-check-label" for="defaultCheck1">
@@ -515,6 +510,31 @@
         </div>
       </div>
     </div>
+  </div>
+    <div class="col-lg-8 ">
+                <div class="row mx-1">
+                    <div class="card text-center col-md-6">
+                        <h5 class="card-header">
+                            Cumulative Profit/Loss
+                        </h5>
+                        &#8377 {{total_profit}}
+                    </div>
+                    <div class="card text-center col-md-6">
+                    <h5 class="card-header">
+                        Lifetime ROE
+                    </h5>
+                    {{net_roe}}%
+                </div>
+                </div>
+                <div class="row card my-5 mx-3">
+                    <h5 class="card-header">
+                        Profitability Chart
+                    </h5>
+                    <div class="table-responsive">
+                    {{details|safe}}
+                    </div>
+                </div>
+            </div>
   </div>
 </main>
 {% endblock %}
