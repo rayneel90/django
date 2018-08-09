@@ -3,538 +3,561 @@
 {% load staticfiles %}
 
 
-{% block stylesheets %} <link rel="stylesheet" href="{% static 'css/calculator.css' %}" > {% endblock %}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'css/calculator.css' %}" >
+  <script src="{% static 'js/calculator.js' %}"></script>
+{% endblock %}
+
 
 {% block content %}
 <main role="main">
-  <div class="row p-4">
-    <div class="col-lg-4 col-md-6  col-sm-10 ">
-    <div class=" card ">
-      <h5 class="card-header"> Enter Loan Details</h5>
-      <ul class="nav nav-tabs nav-justified">
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#TL">Term Loans</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#ODCC">OD / CC</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div id="TL" class="tab-pane  bg mb-0">
-          <div class='bg p-3'>
-            <form method = 'POST'>
-              {% csrf_token %}
-              <input hidden value="TL" name="typ">
-                <div class="card mx-3 my-1 border-0">
-                  <div class="card-header p-0" id="basic">
-                    <h5 class="m-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseZero"
-                              aria-expanded="true" aria-controls="collapseOne" type="button">
-                        Basic Loan Details
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseZero" class="collapse show" aria-labelledby="headingOne">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="Appl">Application Number</label>
-                        <input id="Appl" type="text" required class="form-control" name="ApplNo">
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-8">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="RMname">RM's Name</label>
-                            <input id="RMname" type="text" required class="form-control" name="RMName">
-                          </div>
-                        </div>
-                        <div class="col-sm-4">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="HRMS">HRMS No</label>
-                            <input id="HRMS" type="text" required class="form-control" name="HRMS">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="Product">Product</label>
-                        <select class="custom-select" id="Product" name="product" required>
-                          <option hidden disabled selected value> -- select an option -- </option>
-                          <option value="HL">Home Loan</option>
-                          <option value="LAP">Loan Against Property</option>
-                          <option value="CV">Commercial Vehicle Loan</option>
-                          <option value="SME">SME Loans</option>
-                          <option value="Tractor">Tractor Loan</option>
-                        </select>
-                      </div><!-- Product -->
-                    </div>
-                  </div>
-                </div>
-                <div class="card mx-3 my-1 border-0">
-                  <div class="card-header p-0" id="basic">
-                    <h5 class="m-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                              aria-expanded="true" aria-controls="collapseOne" type="button">
-                        Financial Details
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="LTV">LTV</label>
-                        <div class="input-group mb-3">
-                          <input type="number" step="0.1" class="form-control" id = "LTV" name="ltv">
-                          <div class="input-group-append">
-                            <span class="input-group-text">%</span>
-                          </div>
-                        </div>
-                      </div><!-- LTV-->
-                      <div class='row'>
-                        <div class='col-sm-7'>
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="Principal">Loan Amount</label>
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">&#8377</span>
-                              </div>
-                              <input type="number" class="form-control" id = "Principal" name="sanction_amt" required>
-                            </div>
-                          </div><!-- Principal-->
-                        </div>
-                        <div class='col-sm-5'>
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="ROI">Rate of Interest</label>
-                            <div class="input-group mb-3">
-                              <input type="number" step="0.01" class="form-control" id = "ROI" name="roi" required>
-                              <div class="input-group-append">
-                                <span class="input-group-text">%</span>
-                              </div>
-                            </div>
-                          </div><!-- ROI-->
-                        </div>
-                        <div class="col-sm-6">
-                           <div class="form-group">
-                             <label class="font-weight-bold" for="Tenure">Tenure</label>
-                             <div class="input-group mb-3">
-                               <input type="number" class="form-control" id = "Tenure" name="tenure" required>
-                               <div class="input-group-append">
-                                 <span class="input-group-text">months</span>
-                               </div>
-                             </div>
-                           </div><!-- Tenure -->
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="Rating">Rating</label>
-                            <select class="custom-select" id="Rating" name="rating" >
-                              <option hidden disabled selected value> -- select -- </option>
-                              <option value="AAA">AAA</option>
-                              <option value="AA">AA</option>
-                              <option value="A">A</option>
-                              <option value="BBB">BBB</option>
-                              <option value="BB">BB</option>
-                              <option value="U">Unrated</option>
-                              <option value="CM">Capital Market</option>
-                              <option value="CRE">CRE</option>
-                              <option value="CRE_RH">CRE-RH</option>
-                              <option value="RRE">RRE</option>
-                              <option value="RRP">RRP</option>
-                            </select>
-                          </div><!-- Rating-->
-                        </div>
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-                <div class="card mx-3 my-1 border-0">
-                  <div class="card-header p-0" id="headingTwo">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Fees and Incomes
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="processing">Processing Fee</label>
-                            <div class="input-group mb-3">
-                              <input type="number" step=".1" class="form-control" id = "processing" name="profee">
-                              <div class="input-group-append">
-                                <span class="input-group-text">%</span>
-                              </div>
-                            </div>
-                          </div><!-- Processing Fee-->
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="connector">Connector Payout</label>
-                            <div class="input-group mb-3">
-                              <input type="number" step="0.01"  class="form-control" id = "connector" name="conpay">
-                              <div class="input-group-append">
-                                <span class="input-group-text">%</span>
-                              </div>
-                            </div>
-                          </div><!-- Connector Payout-->
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="insurance">Insurance Premium</label>
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">&#8377</span>
-                              </div>
-                              <input type="number" class="form-control" id = "insurance" name="insur">
-                            </div>
-                          </div><!-- Insurance-->
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="other">Other Income</label>
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">&#8377</span>
-                              </div>
-                              <input type="number" class="form-control" id = "other" name="other">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" name = 'recurr' id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                  Recurring Income
-                                </label>
-                              </div>
-                            </div>
-                          </div><!-- Other income-->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card mx-3 my-1 border-0">
-                  <div class="card-header p-0" id="headingThree">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
-                              aria-expanded="false" aria-controls="collapseThree">
-                        PSL Status
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" >
-                    <div class="card-body">
-                      <h6 class="card-title">
-                        Check all that are applicable
-                      </h6>
-                      <div class="m-2">
-                        <fieldset class="toggle-check large verbal" tabindex="0">
-                        <label>
-                          <input name="psl" type="checkbox" value=1>
-                          <span data-on="Yes" data-off="No">
-                            Priority Sector Lending
-                          </span>
-                        </label>
-                      </fieldset>
-                      </div>
-                      <div class="m-2">
-                        <fieldset class="toggle-check large verbal" tabindex="0">
-                        <label>
-                          <input name="agri_psl" type="checkbox" value=1>
-                          <span data-on="Yes" data-off="No">
-                            Agri Priority Sector Lending
-                          </span>
-                        </label>
-                      </fieldset>
-                      </div>
-                      <div class="m-2">
-                        <fieldset class="toggle-check large verbal" tabindex="0">
-                        <label>
-                          <input name="rrp" type="checkbox" value=1>
-                          <span data-on="Yes" data-off="No">
-                            RRP
-                          </span>
-                        </label>
-                      </fieldset>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card mx-3 my-1 border-0">
-                  <input type="submit" value="Submit" class="btn btn-primary btn-block">
-                </div>
-            </form>
-          </div>
-        </div>
-        <div id="ODCC" class="tab-pane bg mb-0" >
+  <div class="row m-2">
+    <div class="col-lg-4">
+      <div class="card">
+        <h5 class="card-header"> Enter Loan Details</h5>
+        <ul class="nav nav-tabs nav-justified">
+          <li class="nav-item">
+            <a class="nav-link show active"  data-toggle="tab" href="#TL">Term Loans</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#ODCC">OD / CC</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div id="TL"  class="tab-pane show active bg mb-0">
             <div class='bg p-3'>
-            <form method = 'POST'>
-              {% csrf_token %}
-                <input hidden value="ODCC" name="typ">
-                <div class="card mx-3 mx-3 border-0">
-                  <div class="card-header p-0" id="basic">
-                    <h5 class="m-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseZero"
-                              aria-expanded="true" aria-controls="collapseOne">
-                        Basic Loan Details
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseZero" class="collapse show" aria-labelledby="headingOne">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="Appl">Application Number</label>
-                        <input id="Appl" type="text" required class="form-control" name="ApplNo">
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-8">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="RMname">RM's Name</label>
-                            <input id="RMname" type="text" required class="form-control" name="RMName">
+              <form method = 'POST'>
+                {% csrf_token %}
+                <input hidden value="TL" name="typ">
+                  <div class="card mx-2 my-1 border-0">
+                    <div class="card-header p-0" id="TLBasicHeader">
+                      <h5 class="m-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#TLBasicBody"
+                                aria-expanded="true" aria-controls="collapseOne" type="button">
+                          Basic Loan Details
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="TLBasicBody" class="collapse show" aria-labelledby="headingOne">
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="Appl">Application Number</label>
+                          <input id="TLApplNo" type="text" value={{ApplNo}} required class="form-control" name="ApplNo">
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-8">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="RMname">RM's Name</label>
+                              <input id="TLRMname" type="text" value="{{RMName}}" required class="form-control" name="RMName">
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="HRMS">HRMS No</label>
+                              <input id="TLHRMS" type="text"value={{HRMS}} required class="form-control" name="HRMS">
+                            </div>
                           </div>
                         </div>
-                        <div class="col-sm-4">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="HRMS">HRMS No</label>
-                            <input id="HRMS" type="text" required class="form-control" name="HRMS">
-                          </div>
-                        </div>
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="Product">Product</label>
+                          <select class="custom-select" id="TLProduct" name="product" required>
+                            <option hidden disabled selected value> -- select an option -- </option>
+                            <option value="HL" {% if product == "HL" %} selected="selected" {% endif %}>Home Loan</option>
+                            <option value="LAP"{% if product == "LAP" %} selected="selected" {% endif %}>Loan Against Property</option>
+                            <option value="CV"{% if product == "CV" %} selected="selected" {% endif %}>Commercial Vehicle Loan</option>
+                            <option value="SME"{% if product == "SME" %} selected="selected" {% endif %}>SME Loans</option>
+                            <option value="Tractor"{% if product == "Tractor" %} selected="selected" {% endif %}>Tractor Loan</option>
+                            <option value="Corporate"{% if product == "Corporate" %} selected="selected" {% endif %}>Corporate</option>
+                            <option value="AIB"{% if product == "AIB" %} selected="selected" {% endif %}>Bulk AIB</option>
+                          </select>
+                        </div><!-- Product -->
                       </div>
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="Product">Product</label>
-                        <select class="custom-select" id="Product" name="product" required>
-                          <option hidden disabled selected value> -- select an option -- </option>
-                          <option value="HL">Home Loan</option>
-                          <option value="LAP">Loan Against Property</option>
-                          <option value="CV">Commercial Vehicle Loan</option>
-                          <option value="SME">SME Loans</option>
-                          <option value="Tractor">Tractor Loan</option>
-                        </select>
-                      </div><!-- Product -->
                     </div>
                   </div>
-                </div>
-                <div class="card mx-3 mx-3 border-0">
-                  <div class="card-header p-0" id="basic">
-                    <h5 class="m-0">
-                      <button class="btn btn-link" data-toggle="collapse"  type="button" data-target="#collapseOne"
-                              aria-expanded="true" aria-controls="collapseOne">
-                        Financial Details
-                      </button>
-                    </h5>
+                  <div class="card mx-2 my-1 border-0">
+                    <div class="card-header p-0" id="TLFinancialHeader">
+                      <h5 class="m-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#TLFinancialBody"
+                                aria-expanded="true" aria-controls="collapseOne" type="button">
+                          Financial Details
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="TLFinancialBody" class="collapse" aria-labelledby="headingOne">
+                      <div class="card-body">
+                        <div class='row'>
+                          <div id='magicdiv1'class='col-sm-7'>
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="TLPrincipal">Loan Amount</label>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">&#8377</span>
+                                </div>
+                                <input type="number" min="0" step="1000" value={{sanction_amt}} class="form-control" id = "TLPrincipal" name="sanction_amt" required>
+                              </div>
+                            </div><!-- Principal-->
+                          </div>
+                          <div id="magicdiv2" class='col-sm-5'>
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="TLROI">ROI</label>
+                              <div class="input-group mb-3">
+                                <input type="number" min="0" step="0.01" class="form-control" value={{roi}} id = "TLROI" name="roi" required>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                              </div>
+                            </div><!-- ROI-->
+                          </div>
+                          <div id="magicdiv3" class="col-sm-6">
+                             <div class="form-group">
+                               <label class="font-weight-bold" for="TLTenure">Tenure</label>
+                               <div class="input-group mb-3">
+                                 <input type="number" min="0" class="form-control" value={{tenure}} id = "TLTenure" name="tenure" required>
+                                 <div class="input-group-append">
+                                   <span class="input-group-text">months</span>
+                                 </div>
+                               </div>
+                             </div><!-- Tenure -->
+                          </div>
+                          <div id="magicdiv4"class="col-sm-6" >
+                            <div class="form-group" id="RatingGroup">
+                              <label class="font-weight-bold" for="Rating">Rating</label>
+                              <select class="custom-select" id="Rating" name="rating" >
+                                <option hidden disabled selected value> -- select -- </option>
+                                <option value="AAA"{% if rating == "AAA" %} selected="selected" {% endif %}>AAA</option>
+                                <option value="AA"{% if rating == "AA" %} selected="selected" {% endif %}>AA</option>
+                                <option value="A"{% if rating == "A" %} selected="selected" {% endif %}>A</option>
+                                <option value="BBB"{% if rating == "BBB" %} selected="selected" {% endif %}>BBB</option>
+                                <option value="BB"{% if rating == "BB" %} selected="selected" {% endif %}>BB</option>
+                                <option value="U"{% if rating == "U" %} selected="selected" {% endif %}>Unrated</option>
+                                <option value="CM"{% if rating == "CM" %} selected="selected" {% endif %}>Capital Market</option>
+                                <option value="CRE"{% if rating == "CRE" %} selected="selected" {% endif %}>CRE</option>
+                                <option value="CRE_RH"{% if rating == "CRE_RH" %} selected="selected" {% endif %}>CRE-RH</option>
+                                <option value="RRE"{% if rating == "RRE" %} selected="selected" {% endif %}>RRE</option>
+                                <option value="RRP"{% if rating == "RRP" %} selected="selected" {% endif %}>RRP</option>
+                              </select>
+                            </div><!-- Rating-->
+                            <div class="form-group" id="LTVGroup">
+                          <label class="font-weight-bold" for="LTV">LTV</label>
+                          <div class="input-group mb-3">
+                            <input type="number" step="0.01" min="0" value={{ltv}} class="form-control" id = "LTV" name="ltv">
+                            <div class="input-group-append">
+                              <span class="input-group-text">%</span>
+                            </div>
+                          </div>
+                        </div><!-- LTV-->
+                          </div>
+                        
+                        </div>
+                        
+                      </div>
+                    </div>
                   </div>
-                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="LTV">LTV</label>
-                        <div class="input-group mb-3">
-                          <input type="number" step="0.1" class="form-control" id = "LTV" name="ltv">
-                          <div class="input-group-append">
-                            <span class="input-group-text">%</span>
+                  <div class="card mx-2 my-1 border-0">
+                    <div class="card-header p-0" id="TLFeeIncomeHeader">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#TLFeeIncomeBody" aria-expanded="false" aria-controls="collapseTwo">
+                          Fees and Incomes
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="TLFeeIncomeBody" class="collapse" aria-labelledby="headingTwo">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="processing">Processing Fee</label>
+                              <div class="input-group mb-3">
+                                <input type="number" step=".01" min=0 value={{profee}} required class="form-control" id = "processing" name="profee">
+                                <div class="input-group-append">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                              </div>
+                            </div><!-- Processing Fee-->
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="connector">Connector Payout</label>
+                              <div class="input-group mb-3">
+                                <input type="number" step="0.01"  min="0" value={{conpay}} required class="form-control" id = "connector" name="conpay">
+                                <div class="input-group-append">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                              </div>
+                            </div><!-- Connector Payout-->
+                          </div>
+                          <div class="col-sm-6  pr-0">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="insurance">Insurance Premium</label>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">&#8377</span>
+                                </div>
+                                <input type="number" required min="0" value={{insur}} class="form-control" id = "insurance" name="insur">
+                              </div>
+                            </div><!-- Insurance-->
+                          </div>
+                          <div class="col-sm-6  ">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="other">Other Income</label>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">&#8377</span>
+                                </div>
+                                <input type="number" required min="0" class="form-control" value={{other}} id = "other" name="other" value=0>
+                              </div>
+                            </div><!-- Other income-->
+                          </div>
+                          <div class="m-2" id="recurr">
+                            <fieldset class="toggle-check large verbal" tabindex="0">
+                              <label>
+                                <input name="recurr" type="checkbox" value=1>
+                                <span data-on="Yes" data-off="No">
+                                  Is other income recurring?
+                                </span>
+                              </label>
+                            </fieldset>
                           </div>
                         </div>
-                      </div><!-- LTV-->
-                      <div class='row'>
-                        <div class='col-sm-7'>
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="Principal">Loan Amount</label>
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">&#8377</span>
-                              </div>
-                              <input type="number" class="form-control" id = "Principal" name="principal" required>
-                            </div>
-                          </div><!-- Principal-->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card mx-2 my-1 border-0">
+                    <div class="card-header p-0" id="TLPLSheader">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#TLPSLBody"
+                                aria-expanded="false" aria-controls="collapseThree">
+                          PSL Status
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="TLPSLBody" class="collapse" aria-labelledby="headingThree" >
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          Check all that are applicable
+                        </h6>
+                        <div class="m-2">
+                          <fieldset class="toggle-check large verbal" tabindex="0">
+                            <label>
+                              <input name="psl" type="checkbox" value=1>
+                              <span data-on="Yes" data-off="No">
+                                Priority Sector Lending
+                              </span>
+                            </label>
+                          </fieldset>
                         </div>
-                        <div class='col-sm-5'>
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="ROI">Rate of Interest</label>
-                            <div class="input-group mb-3">
-                              <input type="number" step="0.01" class="form-control" id = "ROI" name="roi" required>
-                              <div class="input-group-append">
-                                <span class="input-group-text">%</span>
-                              </div>
-                            </div>
-                          </div><!-- ROI-->
+                        <div class="m-2">
+                          <fieldset class="toggle-check large verbal" tabindex="0">
+                          <label>
+                            <input name="agri_psl" type="checkbox" value=1>
+                            <span data-on="Yes" data-off="No">
+                              Agri Priority Sector Lending
+                            </span>
+                          </label>
+                        </fieldset>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="m-2">
+                          <fieldset class="toggle-check large verbal" tabindex="0">
+                          <label>
+                            <input name="rrp" type="checkbox" value=1>
+                            <span data-on="Yes" data-off="No">
+                              RRP
+                            </span>
+                          </label>
+                        </fieldset>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card mx-2 my-1 border-0">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block">
+                  </div>
+              </form>
+            </div>
+          </div>
+          <div id="ODCC" class="tab-pane bg mb-0" >
+              <div class='bg p-3'>
+              <form method = 'POST'>
+                {% csrf_token %}
+                  <input hidden value="ODCC" name="typ">
+                  <div class="card mx-2 my-1 border-0">
+                    <div class="card-header p-0" id="TLBasicHeader">
+                      <h5 class="m-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#TLBasicBody"
+                                aria-expanded="true" aria-controls="collapseOne" type="button">
+                          Basic Loan Details
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="TLBasicBody" class="collapse show" aria-labelledby="headingOne">
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="Appl">Application Number</label>
+                          <input id="TLApplNo" type="text" required value={{ApplNo}} class="form-control" name="ApplNo">
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-8">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="RMname">RM's Name</label>
+                              <input id="TLRMname" type="text" value={{RMName}} required class="form-control" name="RMName">
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="HRMS">HRMS No</label>
+                              <input id="TLHRMS" type="text" required value={{HRMS}} class="form-control" name="HRMS">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="ODCCProduct">Product</label>
+                          <select class="custom-select" id="ODCCProduct" name="product" required>
+                            <option hidden disabled selected value> -- select an option -- </option>
+                            <option value="HL"{% if product == "HL" %}selected:"selected" {% endif %}>Home Loan</option>
+                            <option value="LAP"{% if product == "LAP" %}selected:"selected" {% endif %}>Loan Against Property</option>
+                            <option value="CV"{% if product == "CV" %}selected:"selected" {% endif %}>Commercial Vehicle Loan</option>
+                            <option value="SME"{% if product == "SME" %}selected:"selected" {% endif %}>SME Loans</option>
+                            <option value="Tractor"{% if product == "Tractor" %}selected:"selected" {% endif %}>Tractor Loan</option>
+                            <option value="Corporate"{% if product == "Corporate" %}selected:"selected" {% endif %}>Corporate</option>
+                            <option value="AIB"{% if product == "AIB" %}selected:"selected" {% endif %}>Bulk AIB</option>
+                          </select>
+                        </div><!-- Product -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card mx-2 my-1 border-0">
+                    <div class="card-header p-0" id="basic">
+                      <h5 class="m-0">
+                        <button class="btn btn-link" data-toggle="collapse"  type="button" data-target="#ODCCFinancialBody"
+                                aria-expanded="true" aria-controls="collapseOne">
+                          Financial Details
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="ODCCFinancialBody" class="collapse" aria-labelledby="headingOne">
+                      <div class="card-body">
+                        <div class='row'>
+                          <div id='magicdiv1ODCC'class='col-sm-7'>
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="TLPrincipal">Loan Amount</label>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">&#8377</span>
+                                </div>
+                                <input type="number" value={{sanction_amt}} min="0000" step="1000" class="form-control" id = "TLPrincipal" name="sanction_amt" required>
+                              </div>
+                            </div><!-- Principal-->
+                          </div>
+                          <div id="magicdiv2ODCC" class='col-sm-5'>
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="TLROI">ROI</label>
+                              <div class="input-group mb-3">
+                                <input type="number" min="0" step="0.01" value={{roi}} class="form-control" id = "TLROI" name="roi" required>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                              </div>
+                            </div><!-- ROI-->
+                          </div>
+                          <div id="magicdiv3ODCC" class="col-sm-6">
                            <div class="form-group">
                              <label class="font-weight-bold" for="utilisation">Utilisation</label>
                              <div class="input-group mb-3">
-                               <input type="number" class="form-control" setp=0.1 id = "utilisation" name="utlisation" required>
+                               <input type="number" class="form-control" min="0" value={{utilisation}} step=0.01 id = "utilisation" name="utlisation" required>
                                <div class="input-group-append">
                                  <span class="input-group-text">%</span>
                                </div>
                              </div>
                            </div><!-- Utilisation -->
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="Rating">Rating</label>
-                            <select class="custom-select" id="Rating" name="rating">
-                              <option hidden disabled selected value> -- select -- </option>
-                              <option value="AAA">AAA</option>
-                              <option value="AA">AA</option>
-                              <option value="A">A</option>
-                              <option value="BBB">BBB</option>
-                              <option value="BB">BB</option>
-                              <option value="U">Unrated</option>
-                              <option value="CM">Capital Market</option>
-                              <option value="CRE">CRE</option>
-                              <option value="CRE_RH">CRE-RH</option>
-                              <option value="RRE">RRE</option>
-                              <option value="RRP">RRP</option>
-                            </select>
-                          </div><!-- Rating-->
+                          </div>
+                          <div id="magicdiv4ODCC"class="col-sm-6" >
+                            <div class="form-group" id="RatingGroupODCC">
+                              <label class="font-weight-bold" for="Rating">Rating</label>
+                              <select class="custom-select" id="Rating" name="rating" >
+                                <option hidden disabled selected value> -- select -- </option>
+                                <option value="AAA"{% if rating == "AAA" %}select="selected" {% endif %}>AAA</option>
+                                <option value="AA"{% if rating == "AA" %}select="selected" {% endif %}>AA</option>
+                                <option value="A"{% if rating == "A" %}select="selected" {% endif %}>A</option>
+                                <option value="BBB"{% if rating == "BBB" %}select="selected" {% endif %}>BBB</option>
+                                <option value="BB"{% if rating == "BB" %}select="selected" {% endif %}>BB</option>
+                                <option value="U"{{% if rating == "U" %}select="selected" {% endif %}%>Unrated</option>
+                                <option value="CM"{% if rating == "CM" %}select="selected" {% endif %}>Capital Market</option>
+                                <option value="CRE"{% if rating == "CRE" %}select="selected" {% endif %}>CRE</option>
+                                <option value="CRE_RH"{% if rating == "CRE_RH" %}select="selected" {% endif %}>CRE-RH</option>
+                                <option value="RRE"{% if rating == "RRE" %}select="selected" {% endif %}>RRE</option>
+                                <option value="RRP"{% if rating == "RRP" %}select="selected" {% endif %}>RRP</option>
+                              </select>
+                            </div><!-- Rating-->
+                            <div class="form-group" id="LTVGroupODCC">
+                          <label class="font-weight-bold" for="LTV">LTV</label>
+                          <div class="input-group mb-3">
+                            <input type="number" step="0.01" min="0" class="form-control" value={{ltv}} id = "LTV" name="ltv">
+                            <div class="input-group-append">
+                              <span class="input-group-text">%</span>
+                            </div>
+                          </div>
+                        </div><!-- LTV-->
+                          </div>
                         </div>
                       </div>
                       
-                    </div>
-                  </div>
-                </div>
-                <div class="card mx-3 my-1 border-0">
-                  <div class="card-header p-0" id="headingTwo">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed"  type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Fees and Incomes
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="processing">Processing Fee</label>
-                            <div class="input-group mb-3">
-                              <input type="number" step=".1" class="form-control" id = "processing" name="profee">
-                              <div class="input-group-append">
-                                <span class="input-group-text">%</span>
-                              </div>
-                            </div>
-                          </div><!-- Processing Fee-->
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="connector">Connector Payout</label>
-                            <div class="input-group mb-3">
-                              <input type="number" step="0.01"  class="form-control" id = "connector" name="conpay">
-                              <div class="input-group-append">
-                                <span class="input-group-text">%</span>
-                              </div>
-                            </div>
-                          </div><!-- Connector Payout-->
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="insurance">Insurance Premium</label>
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">&#8377</span>
-                              </div>
-                              <input type="number" class="form-control" id = "insurance" name="insur">
-                            </div>
-                          </div><!-- Insurance-->
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold" for="insurance">Other Income</label>
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">&#8377</span>
-                              </div>
-                              <input type="number" class="form-control" id = "insurance" name="insur">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                  Recurring Income
-                                </label>
-                              </div>
-                            </div>
-                          </div><!-- Other income-->
-                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div class="card mx-3 my-1 border-0">
-                  <div class="card-header p-0" id="headingThree">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed"  type="button" data-toggle="collapse" data-target="#collapseThree"
-                              aria-expanded="false" aria-controls="collapseThree">
-                        PSL Status
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" >
-                    <div class="card-body">
-                      <h6 class="card-title">
-                        Check all that are applicable
-                      </h6>
-                      <div class="m-2">
-                        <fieldset class="toggle-check large verbal" tabindex="0">
-                        <label>
-                          <input name="psl" type="checkbox" value=1>
-                          <span data-on="Yes" data-off="No">
-                            Priority Sector Lending
-                          </span>
-                        </label>
-                      </fieldset>
-                      </div>
-                      <div class="m-2">
-                        <fieldset class="toggle-check large verbal" tabindex="0">
-                        <label>
-                          <input name="agri_psl" type="checkbox" value=1>
-                          <span data-on="Yes" data-off="No">
-                            Agri Priority Sector Lending
-                          </span>
-                        </label>
-                      </fieldset>
-                      </div>
-                      <div class="m-2">
-                        <fieldset class="toggle-check large verbal" tabindex="0">
-                        <label>
-                          <input name="rrp" type="checkbox" value=1>
-                          <span data-on="Yes" data-off="No">
-                            RRP
-                          </span>
-                        </label>
-                      </fieldset>
+                  <div class="card mx-2 my-1 border-0">
+                    <div class="card-header p-0" id="ODCCFeeIncomeHeader">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#ODCCFeeIncomeBody" aria-expanded="false" aria-controls="collapseTwo">
+                          Fees and Incomes
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="ODCCFeeIncomeBody" class="collapse" aria-labelledby="headingTwo">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="processing">Processing Fee</label>
+                              <div class="input-group mb-3">
+                                <input type="number" step=".01" min="0" required class="form-control" value={{profee}} id = "processing" name="profee">
+                                <div class="input-group-append">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                              </div>
+                            </div><!-- Processing Fee-->
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="connector">Connector Payout</label>
+                              <div class="input-group mb-3">
+                                <input type="number" step="0.01" min="0" required class="form-control" value={{conpay}} id = "connector" name="conpay">
+                                <div class="input-group-append">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                              </div>
+                            </div><!-- Connector Payout-->
+                          </div>
+                          <div class="col-sm-6  pr-0">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="insurance">Insurance Premium</label>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">&#8377</span>
+                                </div>
+                                <input type="number" min="0" required class="form-control" value={{insur}} id = "insurance" name="insur">
+                              </div>
+                            </div><!-- Insurance-->
+                          </div>
+                          <div class="col-sm-6  ">
+                            <div class="form-group">
+                              <label class="font-weight-bold" for="otherODCC">Other Income</label>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">&#8377</span>
+                                </div>
+                                <input type="number" min="0" required class="form-control" id = "otherODCC" name="other" value={{other}}>
+                              </div>
+                            </div><!-- Other income-->
+                          </div>
+                          <div class="m-2" id="recurrODCC">
+                            <fieldset class="toggle-check large verbal" tabindex="0">
+                              <label>
+                                <input name="recurr" type="checkbox" value=1>
+                                <span data-on="Yes" data-off="No">
+                                  Is other income recurring?
+                                </span>
+                              </label>
+                            </fieldset>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="card mx-3 my-1 border-0">
-                  <input type="submit" value="Submit" class="btn btn-primary btn-block">
-                </div>
-            </form>
+                  <div class="card mx-2 my-1 border-0">
+                    <div class="card-header p-0" id="ODCCPSLHeader">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#ODCCPSLBody"
+                                aria-expanded="false" aria-controls="collapseThree">
+                          PSL Status
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="ODCCPSLBody" class="collapse" aria-labelledby="" >
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          Check all that are applicable
+                        </h6>
+                        <div class="m-2">
+                          <fieldset class="toggle-check large verbal" tabindex="0">
+                            <label>
+                              <input name="psl" type="checkbox" value=1>
+                              <span data-on="Yes" data-off="No">
+                                Priority Sector Lending
+                              </span>
+                            </label>
+                          </fieldset>
+                        </div>
+                        <div class="m-2">
+                          <fieldset class="toggle-check large verbal" tabindex="0">
+                          <label>
+                            <input name="agri_psl" type="checkbox" value=1>
+                            <span data-on="Yes" data-off="No">
+                              Agri Priority Sector Lending
+                            </span>
+                          </label>
+                        </fieldset>
+                        </div>
+                        <div class="m-2">
+                          <fieldset class="toggle-check large verbal" tabindex="0">
+                          <label>
+                            <input name="rrp" type="checkbox" value=1>
+                            <span data-on="Yes" data-off="No">
+                              RRP
+                            </span>
+                          </label>
+                        </fieldset>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card mx-2 my-1 border-0">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block">
+                  </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
     <div class="col-lg-8 ">
-                <div class="row mx-1">
-                    <div class="card text-center col-md-6">
-                        <h5 class="card-header">
-                            Cumulative Profit/Loss
-                        </h5>
-                        &#8377 {{total_profit}}
-                    </div>
-                    <div class="card text-center col-md-6">
-                    <h5 class="card-header">
-                        Lifetime ROE
-                    </h5>
-                    {{net_roe}}%
+        <div class="row" >
+          <div>
+            <div class="my-5 mx-3 col-lg-8">
+              <div class="card">
+                <h5 class="card-header">
+                  Profitability Chart
+                </h5>
+                <div class="card-body">
+                  <div class="table-responsive">
+          {{details|safe}}
+          </div>
                 </div>
-                </div>
-                <div class="row card my-5 mx-3">
-                    <h5 class="card-header">
-                        Profitability Chart
-                    </h5>
-                    <div class="table-responsive">
-                    {{details|safe}}
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
+        </div>
+        <div class="col-md-3 offset-md-3">
+          <div class="card">
+          <div class="card-header">
+              Lifetime ROE
+          </div>
+          <div class="card-body">
+            {{net_roe}}%
+          </div>
+          </div>
+        </div>
+    </div>
   </div>
 </main>
+
+<br><br><br>
 {% endblock %}

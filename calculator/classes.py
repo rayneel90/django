@@ -68,7 +68,7 @@ class Calculator:
         'HL': 0.20,
         'LAP': 0.20,
         'CV': 0.25,
-        'Tractors': 0.71,
+        'Tractor': 0.71,
         'SME': .2,
         'Corporate': 1,
         'AIB': 1
@@ -77,7 +77,7 @@ class Calculator:
         'origination': {
             'HL': 39219,
             'LAP': 39219,
-            'SME': 96053,
+            'SME': 85380,
             'CV': 16152,
             'Tractor': 15648
         },
@@ -86,7 +86,7 @@ class Calculator:
             'LAP': 4058,
             'SME': 26810,
             'CV': 4189,
-            'Tractor': None
+            'Tractor': 0
         },
         'collection': {
             'HL': 3719,
@@ -165,7 +165,7 @@ class Calculator:
         (self.__origination_cost, self.__maintenance_cost,
          self.__collection_cost) = self.compute_other_costs()
         self.__sourcing_fee = self.compute_sourcing_fee()
-        if self.product == 'TL':
+        if self.typ == 'TL':
             self.__capital_req = self.compute_capital_req_TL()
         else:
             self.__capital_req = self.compute_capital_req_ODCC()
@@ -224,7 +224,7 @@ class Calculator:
                self.sanction_amt * self.roi * self.lsp * self.lgd[self.product]
 
     def compute_provision(self):
-        return self.sanction_amt * np.append(self.lsp[0], np.diff(self.lsp)) * \
+        return self.pos * np.append(self.lsp[0], np.diff(self.lsp)) * \
                self.lgd[self.product]
 
     def compute_risk_perc(self):
@@ -237,18 +237,24 @@ class Calculator:
             risk_perc = .75 if self.rating == 'RRP' else 1
         elif self.product in ['Corporate', 'SME', 'AIB']:
             risk_perc = self.risk_rating_map[self.rating]
+        elif self.product == "CV":
+            risk_perc = .75 if self.sanction_amt <=50000000 else 1
+        elif self.product == 'Tractor':
+            risk_perc = .75
         else:
             risk_perc = None
         return np.repeat(risk_perc, self.yrs)
 
     def compute_operational_risk(self):
-        return np.append(.0025, np.repeat(0.1, self.yrs - 1))
+        return np.append(.0025, np.repeat(0.001, self.yrs - 1))
 
     def compute_benefits(self):
         return self.psl_impact[self.is_psl] * self.pos, \
                self.agri_psl_impact[self.is_agri_psl] * self.pos
 
     def compute_processing_charge(self):
+        if self.typ == 'ODCC':
+            return np.repeat(self.sanction_amt * self.processing_perc, self.yrs)
         return np.append(self.sanction_amt * self.processing_perc,
                          np.repeat(0, self.pos.shape[0] - 1))
 
@@ -263,7 +269,7 @@ class Calculator:
     def compute_other_costs(self):
         if self.product in ['Corporate', 'AIB']:
             origination_cost = self.income_cost[self.product] * \
-                               self.total_income
+                               self.int_income
             maintenance_cost = np.repeat(0, self.pos.shape[0])
             collection_cost = np.repeat(0, self.pos.shape[0])
         else:

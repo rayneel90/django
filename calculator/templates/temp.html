@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'css/calculator.css' %}" >
+  <script src="{% static 'js/calculator.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<main role="main">
+  
+  <div class="my-3 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-10 offset-sm-1">
+    <div class="card">
+      <h5 class="card-header"> Enter Loan Details</h5>
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#TL">Term Loans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#ODCC">OD / CC</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="TL" class="tab-pane  bg mb-0">
+          <div class='bg p-3'>
+          {% crispy form %}
+          </div>
+        </div>
+        <div id="ODCC" class="tab-pane bg mb-0" >
+            <div class='bg p-3'>
+            {% crispy form %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<br><br><br>
+{% endblock %}
