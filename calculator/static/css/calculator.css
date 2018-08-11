@@ -1,3 +1,6 @@
+.show{
+    background-color: #efefef !important
+};
 .bg {
     background-color: #efefef !important
 };
@@ -120,5 +123,8 @@ input[type="checkbox"]:checked + span em.tc-off {
   content: attr(data-off);  font-size:12px;
 }
 .toggle-check.verbal input[type="checkbox"]:checked + span:after{color:#ddd;}
+.table th, td {
+   text-align: center;
+}
 
-/
+

@@ -107,7 +107,8 @@ class Calculator:
     def __init__(self, typ: str, product: str, sanction_amt: int, roi: float,
                  profee: float, conpay: float, other: int, insur: int,
                  recurr: int=0, psl: int=0, agri_psl: int=0, ltv: float=None,
-                 rating: str = None, tenure: int = 60, utilisation: float = 0.7):
+                 rating: str = None, tenure: int = 60, utilisation: float = 0.7,
+                 **kwargs):
         """
 
         :param product:
@@ -131,20 +132,20 @@ class Calculator:
         self.__product = product
         self.__ltv = ltv
         self.__sanction_amt = sanction_amt
-        self.__roi = roi
+        self.__roi = roi/100
         self.__tenure = tenure
         if typ == 'ODCC':
             self.__tenure = 60
         self.__yrs = int(np.ceil(tenure / 12))
         self.__rating = rating
-        self.__processing_perc = profee
-        self.__connector_pay_perc = conpay
+        self.__processing_perc = profee/100
+        self.__connector_pay_perc = conpay/100
         self.__other_income = other
         self.__is_other_recurring = recurr
         self.__insurance = insur
         self.__is_psl = psl
         self.__is_agri_psl = agri_psl
-        self.__utilisation = utilisation
+        self.__utilisation = utilisation/100
 
         if self.typ == 'TL':
             self.__emi = self.emi_compute()

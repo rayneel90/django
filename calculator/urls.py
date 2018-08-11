@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import CalculatorView, temp
+from .views import myview
 
 app_name = 'calculator'
 urlpatterns = [
-    path('', CalculatorView.as_view(), name='calculator'),
-    path('abc/', temp, name='abc'),
+    path('', myview, name='calc_form'),
 ]

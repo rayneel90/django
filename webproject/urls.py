@@ -22,5 +22,5 @@ urlpatterns = [
     path('calculator/', include('calculator.urls', namespace='calculator')),
     path('log/', include('log.urls', namespace='log')),
     path('backend/', include('backend.urls', namespace='backend')),
-   # path('print/', include('print.urls', namespace='print')),
+    path('print/', include('print.urls', namespace='print')),
 ]

@@ -1,3 +1,130 @@
-.nav-link:hover {
-    background-color: #eee !important;
+.show{
+    background-color: #efefef !important
+};
+.bg {
+    background-color: #efefef !important
+};
+div[comma-value]{
+  position:relative;
+};
+div[comma-value]:before{
+  content: attr(comma-value);
+  position:absolute;
+  left:0;
+};
+div[comma-value] input{
+  color:#fff;
+};
+
+
+/*demo*/
+:root {
+  --blue: #2699FB;
+  --darkblue: #125084;
+  --gray: #DFE6EB;
+  --darkgray: #87919b;
+  --almostwhite: #F9F9F9;
+  --dark: #22292E;
+  --secondary: #ff0059;
+  --darksecondary: #ae2747;
+  --timing: .3s;
 }
+
+/* Screen Reader Only <em> for a11y enhancement */
+.toggle-check span em[class^="tc-"] {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  border: 0; padding: 0;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+.toggle-check span em.tc-on {
+  display: none;
+}
+
+.toggle-check label{cursor:pointer;}
+
+.toggle-check input[type="checkbox"]{
+  vertical-align: middle;
+  margin-right:4.5rem;
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  -ms-appearance:none;
+}
+
+.toggle-check input[type="checkbox"] + span {
+  position: relative;
+  vertical-align: middle;
+  line-height: normal;
+  font-size:14px;
+}
+
+input[type="checkbox"]:checked + span em.tc-on {
+  display: inline-block;
+}
+input[type="checkbox"]:checked + span em.tc-off {
+  display: none;
+}
+
+.toggle-check input[type="checkbox"] + span:before {
+  content: " ";
+  text-align: center;
+  width: 3.25rem;
+  height: 1.5rem;
+  background-color: var(--gray);
+  border: 1px solid var(--darkgray);
+  border-radius: 1rem;
+  position: absolute;
+  z-index: 1;
+  top: -.2rem;
+  left: -4.5rem;
+  transition: background-color var(--timing);
+}
+
+.toggle-check input[type="checkbox"]:checked + span:before {
+  border-color: var(--darkblue);
+  background-color: var(--blue);
+}
+
+.toggle-check input[type="checkbox"] + span:after {
+  content: " ";
+  text-align: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #FFF;
+  border-radius: 1rem;
+  position: absolute;
+  z-index: 10;
+  top: -.15rem;
+  left: -4.4rem;
+  box-shadow: 3px 0px 2px #bbb;
+  -moz-box-shadow:none;
+  transition: left var(--timing);
+}
+.toggle-check input[type="checkbox"]:checked + span:after {
+  left: -2.8rem;
+  box-shadow: -3px 0px 2px var(--darkblue);
+}
+
+/* Sizes */
+.toggle-check.large input[type="checkbox"] + span {line-height: 2rem; font-size:16px;}
+.toggle-check.large input[type="checkbox"] + span:before {width:4rem;height: 2rem;top: -.3rem;}
+.toggle-check.large input[type="checkbox"] + span:after {width: 2rem; height: 2rem;top: -.25rem;}
+.toggle-check.large input[type="checkbox"]:checked + span:after {left: -2.5rem;}
+
+
+
+/* Verbal */
+.toggle-check.verbal input[type="checkbox"] + span:before{
+  content: attr(data-on);text-align:left;font-size:12px;text-indent:5px;color:#FFF;
+}
+.toggle-check.verbal input[type="checkbox"] + span:after{
+  content: attr(data-off);  font-size:12px;
+}
+.toggle-check.verbal input[type="checkbox"]:checked + span:after{color:#ddd;}
+
+.table th {
+   text-align: center;
+}
+

@@ -1,98 +1,75 @@
 $(function()
-{   if(['HL', 'Corporate', 'SME', 'AIB'].includes($('#TLProduct').find(":selected").val())){
-		$('#magicdiv1').removeClass('col-sm-12').addClass('col-sm-7')   ;
-        $('#magicdiv2').removeClass('col-sm-6').addClass('col-sm-5');
-        $('#magicdiv4').show();
-        if($('#TLProduct').find(":selected").val()=="HL"){
-            $('#LTVGroup').show();
-           // $('#RatingGroup').hide();
-        } else {
-            $('#LTVGroup').hide();
-            //$('#RatingGroup').show();
-        };
-    } else{
-        $('#magicdiv1').removeClass('col-sm-7').addClass('col-sm-12');
-        $('#magicdiv2').removeClass('col-sm-5').addClass('col-sm-6');
-        $('#magicdiv4').hide();
-    };
-	$('#other').change(function(){
+{
+    $('#div_TLltv').hide();
+	$('#TLrecurr').hide();
+    $('#div_ODCCltv').hide();
+	$('#ODCCrecurr').hide();
+    $(":button.w-100").click(function(){
+        $(this).find("i").toggleClass("fa-caret-down");
+        $(this).find("i").toggleClass("fa-caret-up")
+    }); // For expand-collapse glyph
+
+	$('#TLother').change(function(){
 		if( $(this).val()>0){
-			$('#recurr').show();
+			$('#TLrecurr').show();
 		} else{
-			$('#recurr').hide();
+			$('#TLrecurr').hide();
 		}
 
 	});
-    $('#LTVGroup').hide();
-	$('#recurr').hide();
-	$('#LTVGroupODCC').hide();
-	$('#recurrODCC').hide();
-	$("#TLProduct").change(function(){
-		if(['HL', 'Corporate', 'SME', 'AIB'].includes($(this).find(":selected").val())){
-			$('#magicdiv1').removeClass('col-sm-12').addClass('col-sm-7');
-			$('#magicdiv2').removeClass('col-sm-6').addClass('col-sm-5');
-			$('#magicdiv4').show();
-			if($(this).find(":selected").val()=="HL"){
-				$('#LTVGroup').show();
-				$('#RatingGroup').hide();
-			} else {
-				$('#LTVGroup').hide();
-				$('#RatingGroup').show();
-			};
-		} else{
-			$('#magicdiv1').removeClass('col-sm-7').addClass('col-sm-12');
-			$('#magicdiv2').removeClass('col-sm-5').addClass('col-sm-6');
-			$('#magicdiv4').hide();
-		};
-	});
-	$('#other').change(function(){
+	$('#ODCCother').change(function(){
 		if( $(this).val()>0){
-			$('#recurr').show();
+			$('#ODCCrecurr').show();
 		} else{
-			$('#recurr').hide();
+			$('#ODCCrecurr').hide();
 		}
-		
+
 	});
-	$("#ODCCProduct").change(function(){
-		if(['HL', 'Corporate', 'SME', 'AIB'].includes($(this).find(":selected").val())){
-			$('#magicdiv1ODCC').removeClass('col-sm-12').addClass('col-sm-7');
-			$('#magicdiv2ODCC').removeClass('col-sm-6').addClass('col-sm-5');
-			$('#magicdiv4ODCC').show();
-			if($(this).find(":selected").val()=="HL"){
-				$('#LTVGroupODCC').show();
-				$('#RatingGroupODCC').hide();
-			} else {
-				$('#LTVGroupODCC').hide();
-				$('#RatingGroupODCC').show();
-			};
-		} else{
-			$('#magicdiv1ODCC').removeClass('col-sm-7').addClass('col-sm-12');
-			$('#magicdiv2ODCC').removeClass('col-sm-5').addClass('col-sm-6');
-			$('#magicdiv4ODCC').hide();
-		};
-	});
-	$('#otherODCC').change(function(){
-		if( $(this).val()>0){
-			$('#recurrODCC').show();
-		} else{
-			$('#recurrODCC').hide();
-		}
-		
-	});
-	if(['HL', 'Corporate', 'SME', 'AIB'].includes($('#ODCCProduct').find(":selected").val())){
-        $('#magicdiv1ODCC').removeClass('col-sm-12').addClass('col-sm-7');
-        $('#magicdiv2ODCC').removeClass('col-sm-6').addClass('col-sm-5');
-        $('#magicdiv4ODCC').show();
-        if($('ODCCProduct').find(":selected").val()=="HL"){
-            $('#LTVGroupODCC').show();
-            $('#RatingGroupODCC').hide();
-        } else {
-            $('#LTVGroupODCC').hide();
-            $('#RatingGroupODCC').show();
+	$("#TLproduct").change(function(){
+	    if(['HL', 'Corporate', 'SME', 'AIB'].includes($(this).find(":selected").val())){
+		    $('#magicdiv1').removeClass('col-sm-12').addClass('col-sm-7')   ;
+            $('#magicdiv2').removeClass('col-sm-6').addClass('col-sm-5');
+            $('#magicdiv4').show();
+            if($(this).find(":selected").val()=="HL"){
+                $('#div_TLltv').show();
+                $('#div_TLrating').hide();
+            } else {
+                $('#div_TLrating').show();
+                $('#div_TLltv').hide();
+            };
+        } else{
+            $('#magicdiv1').removeClass('col-sm-7').addClass('col-sm-12');
+            $('#magicdiv2').removeClass('col-sm-5').addClass('col-sm-6');
+            $('#magicdiv4').hide();
         };
-    } else{
-        $('#magicdiv1ODCC').removeClass('col-sm-7').addClass('col-sm-12');
-        $('#magicdiv2ODCC').removeClass('col-sm-5').addClass('col-sm-6');
-        $('#magicdiv4ODCC').hide();
-    };
+        if($(this).find(":selected").val()=="LAP"){
+            $('#rrp').show();
+        } else{
+            $('#rrp').hide();
+        }
+	});
+	$("#ODCCproduct").change(function(){
+	    if(['HL', 'Corporate', 'SME', 'AIB'].includes($(this).find(":selected").val())){
+		    $('#odccmagicdiv1').removeClass('col-sm-12').addClass('col-sm-7')   ;
+            $('#odccmagicdiv2').removeClass('col-sm-6').addClass('col-sm-5');
+            $('#odccmagicdiv4').show();
+            if($(this).find(":selected").val()=="HL"){
+                $('#div_ODCCltv').show();
+                $('#div_ODCCrating').hide();
+            } else {
+                $('#div_ODCCrating').show();
+                $('#div_ODCCltv').hide();
+            };
+        } else{
+            $('#odccmagicdiv1').removeClass('col-sm-7').addClass('col-sm-12');
+            $('#odccmagicdiv2').removeClass('col-sm-5').addClass('col-sm-6');
+            $('#odccmagicdiv4').hide();
+        };
+        if($(this).find(":selected").val()=="LAP"){
+            $('#odccrrp').show();
+        } else{
+            $('#odccrrp').hide();
+        }
+	});
+
 });
