@@ -1,4 +1,4 @@
 $(function(){
 	$(":input").prop("disabled", true);
-	//window.print()
+	window.print()
 })

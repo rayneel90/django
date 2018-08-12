@@ -3,7 +3,7 @@
  {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-
+{% block title%} Print | Profitability Calculator {% endblock %}
 {% block stylesheets %}
   <link rel="stylesheet" href="{% static 'css/print.css' %}" >
   <script src="{% static 'js/print.js' %}"></script>
@@ -15,7 +15,7 @@
     <div class="m-3">
       <div class="card">
         <h5 class="card-header"> Loan Details</h5>
-        <div class='bg p-3 row'>
+        <div class='bg p-3'>
           {% crispy form %}
         </div>
       </div>
