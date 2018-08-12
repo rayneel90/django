@@ -25,7 +25,7 @@ class Query(models.Model):
         ('RRE', 'RRE'),
         ('RRP','RRP')
     )
-    typ = models.CharField(max_length=4, blank=False)
+    typ = models.CharField("Type", max_length=4, blank=False)
     ApplNo = models.CharField("Application Number", max_length=25,blank=False)
     RMName = models.CharField("RM's Name", max_length=150, blank=False)
     HRMS = models.CharField("HRMS", max_length=7, blank=False)

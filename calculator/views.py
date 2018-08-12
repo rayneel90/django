@@ -53,58 +53,7 @@ def myview(request):
         return render(request, 'response.html', ret)
     return render(request, 'calculator.html', {'tlform': tlform, 'odccform': odccform})
 
-
-# class CalculatorView(TemplateView):
-#     template_name = "calculator.html"
-#
-#     def post(self, request):
-#         # print('\n'*10, request.POST.dict(), '\n'*10)
-#
-#         typ = request.POST.get('typ')
-#         print(typ)
-#         product = request.POST.get('product')
-#         sanction_amt = int(request.POST.get('sanction_amt'))
-#         roi = float(request.POST.get('roi'))
-#         profee = float(request.POST.get('profee'))
-#         conpay = float(request.POST.get('conpay'))
-#         other = int(request.POST.get('other',0))
-#         insur = int(request.POST.get('insur',0))
-#         recurr = int(request.POST.get('recurr', 0))
-#         psl = int(request.POST.get('psl', 0))
-#         agri_psl = int(request.POST.get('agri_psl', 0))
-#         ltv  = request.POST.get('ltv',0)
-#         print(ltv)
-#         if ltv == '':
-#             ltv = 0
-#         ltv = float(ltv)
-#         rating = request.POST.get('rating')
-#         tenure = int(request.POST.get('tenure', 60))
-#         if tenure == '':
-#             tenure = 60
-#         utilisation = float(request.POST.get('utilisation', .70))
-#         print(tenure, utilisation, ltv)
-#         rrp = request.POST.get('rrp')
-#         if rrp:
-#             rating = 'RRP'
-#         # print('\n'*10, typ,
-#         #     product,
-#         #     sanction_amt,
-#         #     roi,
-#         #     profee,
-#         #     conpay,
-#         #     other,
-#         #     insur,
-#         #     recurr,
-#         #     psl,
-#         #     agri_psl,
-#         #     ltv ,
-#         #     rating,
-#         #     tenure,
-#         #     utilisation,
-#         #     '\n'*10)
-#         print(typ)
-
-#         ret.update(request.POST.dict())
-#         print(request.POST.dict())
-#         print('\n'*10, ret, '\n'*10)
-#         return render(request, 'response.html', ret)
+def abc(request):
+    tlform = TLForm(auto_id='TL%s')
+    odccform = ODCCForm(auto_id='ODCC%s')
+    return render(request, 'temp.html', {'tlform': tlform, 'odccform': odccform})

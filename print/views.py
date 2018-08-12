@@ -11,16 +11,16 @@ def print(request):
     if request.method == 'POST':
         ApplNo = request.POST.get('ApplNo')
         dat = model_to_dict(Query.objects.filter(ApplNo=ApplNo).latest('created'))
-        form = PrintForm(dat)
+        form = PrintForm(dat, auto_id="%s")
         calc = Calculator(**dat)
         details = pd.DataFrame.from_dict({
             'Cost/Income (%)': calc.cost_income_ratio * 100,
             'ROA (%)': calc.roa * 100,
             'ROE (%)': calc.roe * 100
-        }, orient='index')
-        details.columns = ['Year ' + str(i + 1) for i in details.columns]
-        if details.shape[1] > 10:
-            details = details.iloc[:, 0:10]
+        })
+        details.index = ['Year ' + str(i + 1) for i in details.index]
+        if details.shape[0] > 10:
+            details = details.iloc[:10, :]
         details = details.round(2).to_html(border=0, classes='table')
         ret = {
             'details': details,
